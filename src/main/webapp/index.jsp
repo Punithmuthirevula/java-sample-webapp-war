@@ -40,7 +40,7 @@
                 </div>
 
                 <div class="row">
-                    <button type="submit" class="btn-primary">Submit Details</button>
+                    <button type="submit" class="btn-primary">Submit</button>
                     <button type="reset" class="btn-secondary" style="background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted);border-radius:10px;padding:10px 14px;">Reset</button>
                 </div>
 
