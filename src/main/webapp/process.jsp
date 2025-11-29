@@ -21,14 +21,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Submission Result</title>
-    <style>
-        body{font-family:Inter,Segoe UI,Arial,sans-serif;background:#071027;color:#e6eef6;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;padding:24px}
-        .panel{max-width:760px;width:100%;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:24px;border-radius:12px;color:#dbeafe}
-        h2{margin-top:0}
-        .field{background:rgba(255,255,255,0.02);padding:10px;border-radius:8px;margin:8px 0}
-        a.btn{display:inline-block;margin-top:12px;padding:10px 14px;background:#06b6d4;color:#022;border-radius:8px;text-decoration:none;font-weight:700}
-        .meta{font-size:13px;color:#94a3b8;margin-top:12px}
-    </style>
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/styles.css">
 </head>
 <body>
 <div class="panel">
