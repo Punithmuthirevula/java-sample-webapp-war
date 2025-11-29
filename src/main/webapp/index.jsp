@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!-- <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -50,6 +50,53 @@
         <h1>Welcome to DevOps</h1>
         <div class="author">- Puneeth Kumar Reddy</div>
     </div>
+</body>
+</html>
+ -->
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Jenkins Test Page</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        .box { padding: 15px; background: #f2f2f2; border-radius: 8px; width: 400px; }
+        input, select { padding: 6px; margin-top: 5px; width: 100%; }
+        button { padding: 8px 12px; margin-top: 12px; }
+        .info { margin-top: 20px; background: #e8ffe8; padding: 10px; border-radius: 6px; }
+    </style>
+</head>
+<body>
+
+<h2>Jenkins Automation Test Page</h2>
+<p>This page is deployed through Tomcat to verify Jenkins CI/CD pipeline.</p>
+
+<div class="box">
+    <form action="process.jsp" method="post">
+        <label><b>Your Name</b></label>
+        <input type="text" name="username" placeholder="Enter name" required>
+
+        <label><b>Select Environment</b></label>
+        <select name="environment">
+            <option value="dev">Development</option>
+            <option value="qa">QA</option>
+            <option value="prod">Production</option>
+        </select>
+
+        <label><b>Comments</b></label>
+        <input type="text" name="comments" placeholder="Any message">
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<div class="info">
+    <h3>Server Info (changes on every deploy):</h3>
+    <p><b>Current Time:</b> <%= new java.util.Date() %></p>
+    <p><b>Server:</b> <%= request.getServerName() %>:<%= request.getServerPort() %></p>
+    <p><b>JSP Reload Counter:</b> <%= Math.round(Math.random() * 100000) %></p>
+</div>
+
 </body>
 </html>
 
