@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%
-    // simple HTML-escape helper to avoid echoing raw input
-    String escapeHtml(String s) {
+<%!
+    // simple HTML-escape helper to avoid echoing raw input (declaration block)
+    public String escapeHtml(String s) {
         if (s == null) return "";
         return s.replace("&","&amp;")
                 .replace("<","&lt;")
@@ -9,7 +9,8 @@
                 .replace("\"","&quot;")
                 .replace("'","&#x27;");
     }
-
+%>
+<%
     String username = escapeHtml(request.getParameter("username"));
     String environment = escapeHtml(request.getParameter("environment"));
     String comments = escapeHtml(request.getParameter("comments"));
