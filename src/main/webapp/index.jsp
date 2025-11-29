@@ -8,7 +8,7 @@
             margin: 0;
             padding: 0;
             font-family: "Segoe UI", Arial, sans-serif;
-            background: linear-gradient(green, blue, pink);
+            background: linear-gradient(yellow, green, orange);
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -48,7 +48,7 @@
 <body>
     <div class="container">
         <h1>Welcome to DevOps</h1>
-        <div class="author">- Puneeth</div>
+        <div class="author">- Puneeth Kumar Reddy</div>
     </div>
 </body>
 </html>
