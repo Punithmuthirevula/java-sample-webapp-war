@@ -41,7 +41,7 @@
                 </div>
 
                 <div class="row">
-                    <button type="submit" class="btn-primary">SUBMIT</button>
+                    <button type="submit" class="btn-primary">SUBMIT BUTTON</button>
                     <button type="reset" class="btn-secondary" style="background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted);border-radius:10px;padding:10px 14px;">RESET</button>
                 </div>
 
