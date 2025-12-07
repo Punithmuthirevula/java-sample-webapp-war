@@ -6,7 +6,7 @@ pipeline {
                 branch "develop"
                 }
             steps {
-                echo "Build happens here"
+                echo "Build happens here sample code"
             }
 
         }
