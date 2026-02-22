@@ -1,0 +1,138 @@
+pipeline {
+    agent any
+
+    parameters {
+        string defaultValue: 'Puneeth', description: 'WelcomeTo the Application', name: 'username'
+        choice choices: ['AWS', 'Devops', 'Kubernetes', 'Jenkins', 'Linux', 'Ansible', 'Terraform'], description: 'These are the backbone of cloud Automation', name: 'coursename'
+    }
+
+    environment {
+        APP_NAME = "GIT_MAVEN_TOMCAT_OTHERTHINGS_PRACTISE"
+        DEPLOY_DIRECTORY = "/opt/tomcat11/webapps"
+        WAR_FILE = "target/my-app.war"
+        TOMCAT_CMD = "/opt/tomcat11/bin"
+        EMAIL_RECIPIENT = "punithmuthirevula@gmail.com"
+    }
+
+    stages {
+
+        stage ("Hello") {
+            steps {
+                echo "This is sample test project"
+            }
+        }
+
+        stage ("Git Fetch") {
+            steps {
+                echo "Fetching the git Repo"
+                git branch: 'main',
+                    changelog: false,
+                    credentialsId: '43532e3c-3c93-481c-b86d-81e44e3ab398',
+                    poll: false,
+                    url: 'https://github.com/Punithmuthirevula/java-sample-webapp-war.git'
+                echo "Completed fetching the git repo"
+            }
+        }
+
+        stage ("Create package (Build)") {
+            steps {
+                echo "Started creating a maven package"
+                sh 'mvn clean package'
+                echo "Maven Package Created Successfully"
+            }
+        }
+
+        stage ("Maven package to Tomcat (Deploy)") {
+            steps {
+                echo "Started Deploying the package in Tomcat server"
+
+                sshPublisher(
+                    publishers: [
+                        sshPublisherDesc(
+                            configName: 'tomcat11',   // must match Jenkins SSH config
+                            transfers: [
+                                sshTransfer(
+                                    sourceFiles: 'target/my-app.war',
+                                    removePrefix: 'target/',
+                                    remoteDirectory: '/opt/tomcat11/webapps',
+                                    execCommand: '''
+                                        cd /opt/tomcat11/bin
+                                        ./shutdown.sh || true
+                                        sleep 5
+                                        ./startup.sh
+                                    ''',
+                                    execTimeout: 120000
+                                )
+                            ],
+                            verbose: true
+                        )
+                    ]
+                )
+
+                echo "Completed Deployment and Started Application"
+            }
+        }
+
+        stage ("Checking with the parameters with string Format") {
+            steps {
+                echo "Welcome ${params.username}"
+            }
+        }
+
+        stage ("Selection Choice based on the user inputs") {
+            steps {
+                echo "You are learning ${params.coursename}"
+            }
+        }
+
+        stage ("Start downstream job") {
+            steps {
+                echo "Started the downstream job after completing upstream job"
+                build wait: false, propagate: false, job: 'proj_wek_sampleupstream_downstream_pu'
+                echo "Completed the downstream job Successfully"
+            }
+        }
+    }
+
+    post {
+        success {
+            script {
+                def buildInfo = """
+                            Job Name: ${env.JOB_NAME}
+                            Build Number: ${env.BUILD_NUMBER}
+                            Build URL: ${env.BUILD_URL}
+                            Display Name: ${currentBuild.displayName}
+                            Result: ${currentBuild.currentResult}
+                            Node: ${env.NODE_NAME}
+                            Workspace: ${env.WORKSPACE}
+                            Parameters: Username=${params.username}, Course=${params.coursename}
+                            """
+                echo buildInfo
+
+                // mail to: "${env.EMAIL_RECIPIENT}",
+                //      subject: "SUCCESS: Build #${env.BUILD_NUMBER} of ${env.JOB_NAME}",
+                //      body: "Hello,\n\nThe Jenkins pipeline has completed SUCCESSFULLY.\n\n${buildInfo}\nRegards,\nJenkins"
+            }
+        }
+
+        failure {
+            script {
+                def buildInfo = """
+                            Job Name: ${env.JOB_NAME}
+                            Build Number: ${env.BUILD_NUMBER}
+                            Build URL: ${env.BUILD_URL}
+                            Display Name: ${currentBuild.displayName}
+                            Result: ${currentBuild.currentResult}
+                            Node: ${env.NODE_NAME}
+                            Workspace: ${env.WORKSPACE}
+                            Parameters: Username=${params.username}, Course=${params.coursename}
+                            """
+                echo buildInfo
+
+                // mail to: "${env.EMAIL_RECIPIENT}",
+                //      subject: "FAILURE: Build #${env.BUILD_NUMBER} of ${env.JOB_NAME}",
+                //      body: "Hello,\n\nThe Jenkins pipeline has FAILED.\n\n${buildInfo}\nPlease check the logs for details.\n\nRegards,\nJenkins"
+            }
+        }
+    }
+}

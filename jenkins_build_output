@@ -1,0 +1,170 @@
+Started by user punith
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/puneeth_firstpipeline
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Hello)
+[Pipeline] echo
+This is sample test project
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Git Fetch)
+[Pipeline] echo
+Fetching the git Repo
+[Pipeline] git
+The recommended git tool is: NONE
+Warning: CredentialId "43532e3c-3c93-481c-b86d-81e44e3ab398" could not be found.
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/puneeth_firstpipeline/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/Punithmuthirevula/java-sample-webapp-war.git # timeout=10
+Fetching upstream changes from https://github.com/Punithmuthirevula/java-sample-webapp-war.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.50.1'
+ > git fetch --tags --force --progress -- https://github.com/Punithmuthirevula/java-sample-webapp-war.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision f58579ff4ecfd4537204c280852f720e2dab5709 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f f58579ff4ecfd4537204c280852f720e2dab5709 # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git branch -D main # timeout=10
+ > git checkout -b main f58579ff4ecfd4537204c280852f720e2dab5709 # timeout=10
+Commit message: "Shorten environment options in index.jsp"
+[Pipeline] echo
+Completed fetching the git repo
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Create package (Build))
+[Pipeline] echo
+Started creating a maven package
+[Pipeline] sh
++ mvn clean package
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------------< com.mycompany.app:my-app >----------------------
+[INFO] Building my-app Maven Webapp 1.0-SNAPSHOT
+[INFO] --------------------------------[ war ]---------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:3.4.0:clean (default-clean) @ my-app ---
+[INFO] Deleting /var/lib/jenkins/workspace/puneeth_firstpipeline/target
+[INFO] 
+[INFO] --- maven-resources-plugin:3.3.1:resources (default-resources) @ my-app ---
+[INFO] skip non existing resourceDirectory /var/lib/jenkins/workspace/puneeth_firstpipeline/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ my-app ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-resources-plugin:3.3.1:testResources (default-testResources) @ my-app ---
+[INFO] skip non existing resourceDirectory /var/lib/jenkins/workspace/puneeth_firstpipeline/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ my-app ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.3.0:test (default-test) @ my-app ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] --- maven-war-plugin:3.4.0:war (default-war) @ my-app ---
+[INFO] Packaging webapp
+[INFO] Assembling webapp [my-app] in [/var/lib/jenkins/workspace/puneeth_firstpipeline/target/my-app]
+[INFO] Processing war project
+[INFO] Copying webapp resources [/var/lib/jenkins/workspace/puneeth_firstpipeline/src/main/webapp]
+[INFO] Building war: /var/lib/jenkins/workspace/puneeth_firstpipeline/target/my-app.war
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  1.034 s
+[INFO] Finished at: 2026-02-22T13:17:46Z
+[INFO] ------------------------------------------------------------------------
+[Pipeline] echo
+Maven Package Created Successfully
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Maven package to Tomcat (Deploy))
+[Pipeline] echo
+Started Deploying the package in Tomcat server
+[Pipeline] sshPublisher
+SSH: Connecting from host [ip-172-31-72-63.ec2.internal]
+SSH: Connecting with configuration [tomcat11] ...
+SSH: Creating session: username [ec2-user], hostname [172.31.80.184], port [22]
+SSH: Connecting session ...
+SSH: Connected
+SSH: Opening SFTP channel ...
+SSH: SFTP channel open
+SSH: Connecting SFTP channel ...
+SSH: Connected
+SSH: cd [/opt/tomcat11/webapps]
+SSH: OK
+SSH: cd [/opt/tomcat11/webapps]
+SSH: OK
+SSH: cd [opt/tomcat11/webapps]
+SSH: OK
+SSH: put [my-app.war]
+SSH: Opening exec channel ...
+SSH: EXEC: channel open
+SSH: EXEC: STDOUT/STDERR from command [
+                                        cd /opt/tomcat11/bin
+                                        ./shutdown.sh || true
+                                        sleep 5
+                                        ./startup.sh
+                                    ] ...
+SSH: EXEC: connected
+Tomcat started.
+SSH: EXEC: completed after 5,404 ms
+SSH: Disconnecting configuration [tomcat11] ...
+SSH: Transferred 1 file(s)
+[Pipeline] echo
+Completed Deployment and Started Application
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Checking with the parameters with string Format)
+[Pipeline] echo
+Welcome Puneeth
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Selection Choice based on the user inputs)
+[Pipeline] echo
+You are learning AWS
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Start downstream job)
+[Pipeline] echo
+Started the downstream job after completing upstream job
+[Pipeline] build (Scheduling proj_wek_sampleupstream_downstream_pu)
+Scheduling project: proj_wek_sampleupstream_downstream_pu
+[Pipeline] echo
+Completed the downstream job Successfully
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] echo
+
+                            Job Name: puneeth_firstpipeline
+                            Build Number: 5
+                            Build URL: http://34.204.175.245:8080/job/puneeth_firstpipeline/5/
+                            Display Name: #5
+                            Result: SUCCESS
+                            Node: built-in
+                            Workspace: /var/lib/jenkins/workspace/puneeth_firstpipeline
+                            Parameters: Username=Puneeth, Course=AWS
+                            
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
