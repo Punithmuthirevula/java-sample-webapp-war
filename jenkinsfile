@@ -10,16 +10,16 @@ pipeline {
             }
 
         }
-        stage ("Diploy-Dev"){
+        stage ("test"){
                 when {
                                 branch "develop"
                                 }
                     steps {
-                        echo "Deploy Dev happens here"
+                        echo "Teat Dev happens here"
                     }
         
                 }
-        stage ("Diploy-Prod"){
+        stage ("Deploy"){
                 when {
                                 branch "main"
                                 }
