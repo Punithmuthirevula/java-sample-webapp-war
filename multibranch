@@ -37,7 +37,7 @@ pipeline {
 
         stage('Dev branch special step') {
             when {
-                branch 'dev'
+                branch 'develop'
             }
             steps {
                 echo "This runs only on dev branch"
